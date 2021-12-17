@@ -1,0 +1,115 @@
+plugins {
+    // Apply the scala Plugin to add support for Scala.
+    id 'scala'
+    id 'jacoco'
+    // Apply the java-library plugin for API and implementation separation.
+    id 'java-library'
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+version = '0.0.1'
+
+tasks.withType(ScalaCompile) {
+    scalaCompileOptions.additionalParameters = [
+            "-deprecation", // Emit warning and location for usages of deprecated APIs.
+            "-encoding",
+            "utf-8", // Specify character encoding used by source files.
+            "-explaintypes", // Explain type errors in more detail.
+            "-feature", // Emit warning and location for usages of features that should be imported explicitly.
+            "-language:existentials", // Existential types (besides wildcard types) can be written and inferred
+            "-language:experimental.macros", // Allow macro definition (besides implementation and application)
+            "-language:higherKinds", // Allow higher-kinded types
+            "-language:implicitConversions", // Allow definition of implicit functions called views
+            "-unchecked", // Enable additional warnings where generated code depends on assumptions.
+            "-Xcheckinit", // Wrap field accessors to throw an exception on uninitialized access.
+            "-Xfatal-warnings", // Fail the compilation if there are any warnings.
+            //INVALID OPT scala >= 2.13"-Xfuture", // Turn on future language features.
+            "-Xlint:adapted-args", // Warn if an argument list is modified to match the receiver.
+            //INVALID OPT scala >= 2.13"-Xlint:by-name-right-associative", // By-name parameter of right associative operator.
+            "-Xlint:constant", // Evaluation of a constant arithmetic expression results in an error.
+            "-Xlint:delayedinit-select", // Selecting member of DelayedInit.
+            "-Xlint:doc-detached", // A Scaladoc comment appears to be detached from its element.
+            "-Xlint:inaccessible", // Warn about inaccessible types in method signatures.
+            //INVALID OPT scala >= 2.13"-Xlint:infer-any", // Warn when a type argument is inferred to be `Any`.
+            "-Xlint:missing-interpolator", // A string literal appears to be missing an interpolator id.
+            //INVALID OPT scala >= 2.13"-Xlint:nullary-override", // Warn when non-nullary `def f()' overrides nullary `def f'.
+            //INVALID OPT scala >= 2.13"-Xlint:nullary-unit", // Warn when nullary methods return Unit.
+            "-Xlint:option-implicit", // Option.apply used implicit view.
+            "-Xlint:package-object-classes", // Class or object defined in package object.
+            "-Xlint:poly-implicit-overload", // Parameterized overloaded implicit methods are not visible as view bounds.
+            "-Xlint:private-shadow", // A private field (or class parameter) shadows a superclass field.
+            "-Xlint:stars-align", // Pattern sequence wildcard must align with sequence component.
+            "-Xlint:type-parameter-shadow", // A local type parameter shadows a type already in scope.
+            //INVALID OPT scala >= 2.13"-Xlint:unsound-match", // Pattern match may not be typesafe.
+            //INVALID OPT scala >= 2.13"-Yno-adapted-args", // Do not adapt an argument list (either by inserting () or creating a tuple) to match the receiver.
+            //INVALID OPT scala >= 2.13"-Ypartial-unification", // Enable partial unification in type constructor inference
+            "-Ywarn-dead-code", // Warn when dead code is identified.
+            "-Ywarn-extra-implicit", // Warn when more than one implicit parameter section is defined.
+            //INVALID OPT scala >= 2.13"-Ywarn-inaccessible", // Warn about inaccessible types in method signatures.
+            //INVALID OPT scala >= 2.13"-Ywarn-infer-any", // Warn when a type argument is inferred to be `Any`.
+            //INVALID OPT scala >= 2.13"-Ywarn-nullary-override", // Warn when non-nullary `def f()' overrides nullary `def f'.
+            //INVALID OPT scala >= 2.13"-Ywarn-nullary-unit", // Warn when nullary methods return Unit.
+            "-Ywarn-numeric-widen", // Warn when numerics are widened.
+            "-Ywarn-unused:implicits", // Warn if an implicit parameter is unused.
+            "-Ywarn-unused:imports", // Warn if an import selector is not referenced.
+            "-Ywarn-unused:locals", // Warn if a local definition is unused.
+            "-Ywarn-unused:params", // Warn if a value parameter is unused.
+            "-Ywarn-unused:patvars", // Warn if a variable bound in a pattern is unused.
+            "-Ywarn-unused:privates", // Warn if a private member is unused.
+            "-Ywarn-value-discard" // Warn when non-Unit expression results are unused.
+    ]
+}
+
+tasks.named('jar') {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                'Implementation-Version': project.version)
+    }
+}
+
+dependencies {
+    // Use Scala 2.13 in our library project
+    implementation 'org.scala-lang:scala-library:2.13.6'
+    implementation 'org.scala-lang:scala-reflect:2.13.6'
+
+    // This dependency is used by the application.
+    implementation 'com.google.guava:guava:30.1.1-jre'
+    implementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+
+    // https://mvnrepository.com/artifact/com.tngtech.archunit/archunit
+    implementation 'com.tngtech.archunit:archunit:0.22.0'
+
+    // Use Scalatest for testing our library
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.scalatest:scalatest_2.13:3.2.10'
+    testImplementation 'org.scalatestplus:junit-4-13_2.13:3.2.2.0'
+
+    // https://mvnrepository.com/artifact/org.scalacheck/scalacheck
+    testImplementation 'org.scalacheck:scalacheck_2.13:1.15.4'
+
+    // https://mvnrepository.com/artifact/org.scalatestplus/scalacheck-1-15
+    testImplementation 'org.scalatestplus:scalacheck-1-15_2.13:3.3.0.0-SNAP3'
+
+    // Need scala-xml at test runtime
+    testRuntimeOnly 'org.scala-lang.modules:scala-xml_2.13:1.2.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.1'
+}
+
+test {
+    useJUnitPlatform{
+        includeEngines("junit-jupiter", "junit-vintage")
+    }
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+    dependsOn test // tests are required to run before generating the report
+}
