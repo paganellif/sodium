@@ -2,7 +2,7 @@ name: Sodium Dev CI
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ dev, 'renovate/*' ]
   pull_request:
 
 jobs:
