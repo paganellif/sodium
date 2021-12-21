@@ -74,7 +74,7 @@ tasks.named('jar') {
 
 dependencies {
     // Use Scala 2.13 in our library project
-    implementation 'org.scala-lang:scala-library:2.13.6'
+    implementation 'org.scala-lang:scala-library:2.13.7'
     implementation 'org.scala-lang:scala-reflect:2.13.6'
 
     // This dependency is used by the application.
