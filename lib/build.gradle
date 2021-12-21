@@ -74,8 +74,9 @@ tasks.named('jar') {
 
 dependencies {
     // Use Scala 2.13 in our library project
-    implementation 'org.scala-lang:scala-library:2.13.6'
-    implementation 'org.scala-lang:scala-reflect:2.13.6'
+    implementation 'org.scala-lang:scala-library:2.13.7'
+
+    implementation 'org.scala-lang:scala-reflect:2.13.7'
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:31.0.1-jre'
@@ -86,7 +87,8 @@ dependencies {
 
     // Use Scalatest for testing our library
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.scalatest:scalatest_2.13:3.2.10'
+
+    testImplementation 'org.scalatest:scalatest_2.13:3.3.0-SNAP3'
     testImplementation 'org.scalatestplus:junit-4-13_2.13:3.2.2.0'
 
     // https://mvnrepository.com/artifact/org.scalacheck/scalacheck
@@ -98,7 +100,7 @@ dependencies {
     // Need scala-xml at test runtime
     testRuntimeOnly 'org.scala-lang.modules:scala-xml_2.13:2.0.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.1'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.8.2'
 }
 
 test {
