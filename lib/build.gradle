@@ -83,7 +83,7 @@ dependencies {
     implementation 'org.junit.jupiter:junit-jupiter:5.8.2'
 
     // https://mvnrepository.com/artifact/com.tngtech.archunit/archunit
-    implementation 'com.tngtech.archunit:archunit:0.22.0'
+    implementation 'com.tngtech.archunit:archunit:0.23.0'
 
     // Use Scalatest for testing our library
     testImplementation 'junit:junit:4.13.2'
