@@ -92,7 +92,7 @@ dependencies {
     testImplementation 'org.scalatestplus:junit-4-13_2.13:3.3.0.0-SNAP3'
 
     // https://mvnrepository.com/artifact/org.scalacheck/scalacheck
-    testImplementation 'org.scalacheck:scalacheck_2.13:1.15.4'
+    testImplementation 'org.scalacheck:scalacheck_2.13:1.16.0'
 
     // https://mvnrepository.com/artifact/org.scalatestplus/scalacheck-1-15
     testImplementation 'org.scalatestplus:scalacheck-1-15_2.13:3.3.0.0-SNAP3'
